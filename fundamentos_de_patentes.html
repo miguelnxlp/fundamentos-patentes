@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos: Documento de Patentes y ¿Cómo explotar una patente?</title>
+    
+    <!-- Fuentes requeridas por el diseño Monologue -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'electric-cyan': '#19d0e8',
+                        'sky-signal': '#44ccff',
+                        'deep-teal': '#062f34',
+                        'void-black': '#000000',
+                        'obsidian': '#010101',
+                        'midnight': '#191919',
+                        'graphite': '#282828',
+                        'charcoal': '#363636',
+                        'slate': '#3f3f3f',
+                        'steel-gray': '#7f7f7f',
+                        'paper-white': '#ffffff',
+                        'ghost-gray': '#c0c0c0',
+                    },
+                    fontFamily: {
+                        'instrument': ['"Instrument Serif"', 'serif'],
+                        'mono': ['"DM Mono"', 'monospace'],
+                        'geist': ['"Inter"', 'sans-serif'], // Usamos Inter como fallback excelente para Geist
+                    },
+                    fontSize: {
+                        'caption': ['10px', { lineHeight: '1.4', letterSpacing: '0.21px' }],
+                        'body': ['17px', { lineHeight: '1.4', letterSpacing: '0px' }],
+                        'subheading': ['20px', { lineHeight: '1.2', letterSpacing: '-0.2px' }],
+                        'heading-sm': ['32px', { lineHeight: '1.1', letterSpacing: '0.26px' }],
+                        'heading': ['48px', { lineHeight: '1.1', letterSpacing: '-1.44px' }],
+                        'heading-lg': ['72px', { lineHeight: '1', letterSpacing: '-2.16px' }],
+                        'display': ['96px', { lineHeight: '0.9', letterSpacing: '-3.84px' }],
+                        'watermark': ['min(25vw, 400px)', { lineHeight: '0.8', letterSpacing: '-0.05em' }]
+                    },
+                    boxShadow: {
+                        'subtle': 'inset 3px 3px 2px 0px rgba(0, 0, 0, 0.7), 3px 2px 2px 0px rgba(255, 255, 255, 0.25)',
+                        'sm-device': '0px 4px 4px 0px rgba(0, 0, 0, 0.25), 1px 1px 2px 0px rgba(255, 255, 255, 0.25), inset 1px 1px 1px 0px rgba(0, 0, 0, 0.5), inset 2px 2px 12px 0px rgba(0, 0, 0, 0.7)',
+                        'raised': '0px 0px 0px 1px rgba(0, 0, 0, 0.63)',
+                        'teal-glow': 'inset 6px 6px 10px 0px rgb(14, 93, 102), 4px 4px 4px 0px rgba(255, 255, 255, 0.2), 1px 1px 2px 0px rgba(255, 255, 255, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* */
+        .ghost-watermark {
+            background: linear-gradient(180deg, #3f3f3f 0%, #000000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.15;
+            user-select: none;
+        }
+
+        .screen-gradient {
+            background: linear-gradient(180deg, rgb(32,177,195) 0%, rgb(3,67,75) 100%);
+        }
+
+        .dot-matrix-bg {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 8px 8px;
+        }
+        
+        .claim-green { color: #4ade80; font-weight: bold; }
+        .claim-red { color: #f87171; font-weight: bold; }
+        .claim-yellow { color: #facc15; font-weight: bold; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #282828; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f3f; }
+    </style>
+</head>
+<body class="antialiased selection:bg-electric-cyan selection:text-void-black">
+
+    <!-- Marca de agua de fondo característica de Monologue -->
+    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none w-full text-center overflow-hidden flex justify-center">
+        <span class="font-instrument italic text-watermark ghost-watermark whitespace-nowrap">Monopolio</span>
+    </div>
+
+    <!-- -->
+    <header class="fixed top-0 w-full z-50 bg-void-black/80 backdrop-blur-md border-b border-graphite px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-6">
+            <div class="bg-paper-white p-1 rounded-sm w-[140px] h-auto flex items-center justify-center overflow-hidden">
+                <img src="Logo Dpto_2.jpg" alt="Logo Dpto. Propiedad Intelectual" class="w-full h-auto object-contain" onerror="this.src='https://placehold.co/200x80/ffffff/000000?text=U+Externado'">
+            </div>
+            <div class="hidden md:block">
+                <div class="font-mono text-[12px] text-steel-gray tracking-widest uppercase mb-1">Maestría en Propiedad Intelectual</div>
+                <div class="font-mono text-[10px] text-electric-cyan tracking-widest uppercase">Año 1 • Septiembre 2026</div>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden lg:flex items-center gap-6 font-mono text-[12px] text-steel-gray mr-4">
+                <a href="#part1" class="hover:text-paper-white transition-colors">01. Documento</a>
+                <a href="#part2" class="hover:text-paper-white transition-colors">02. IA & Patentes</a>
+                <a href="#part3" class="hover:text-paper-white transition-colors">03. Proceso</a>
+                <a href="#part4" class="hover:text-paper-white transition-colors">04. Explotación</a>
+            </div>
+            <button onclick="window.print()" class="bg-paper-white text-void-black font-mono text-[12px] uppercase px-5 py-2 rounded-full hover:bg-ghost-gray transition-colors flex items-center gap-2">
+                <span>Descargar</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="relative z-10 max-w-[1200px] mx-auto px-6 pt-32 pb-24 space-y-[120px]">
+
+        <!-- -->
+        <section id="hero" class="min-h-[80vh] flex flex-col justify-center">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-8">
+                    <h1 class="font-instrument italic text-heading-lg md:text-display text-paper-white leading-[0.9] mb-8 relative">
+                        Fundamentos:<br>
+                        Documento de Patentes y <span class="text-electric-cyan">¿Cómo explotar</span> una patente?
+                    </h1>
+                    
+                    <div class="font-geist text-body text-steel-gray max-w-2xl mb-12">
+                        Clase magistral interactiva diseñada para la discusión y análisis profundo de las herramientas de protección a la innovación y nuevas creaciones.
+                    </div>
+
+                    <!-- Botón de acción / Ghost Button -->
+                    <a href="#part1" class="inline-flex items-center gap-3 border border-graphite text-paper-white font-mono text-[12px] px-6 py-3 rounded-lg hover:bg-midnight transition-colors uppercase tracking-widest">
+                        Iniciar Sesión <span class="text-electric-cyan">→</span>
+                    </a>
+                </div>
+                
+                <!-- Product Card Metaphor para el perfil del docente -->
+                <div class="lg:col-span-4 relative mt-12 lg:mt-0">
+                    <!-- Sello "MADE BY" -->
+                    <div class="absolute -top-6 -right-6 z-20 bg-[#1a3a4a] rounded-xl p-4 shadow-subtle border border-sky-signal/20 transform rotate-3">
+                        <div class="font-mono text-[10px] text-paper-white/80 uppercase tracking-widest mb-1 text-center">Docente Investigador</div>
+                        <div class="font-mono text-[15px] text-electric-cyan font-bold uppercase text-center">Carlos A. Conde G.</div>
+                        <div class="font-mono text-[10px] text-paper-white/60 text-center mt-1">(PhD, MA)</div>
+                    </div>
+                    
+                    <!-- Resumen Ejecutivo -->
+                    <div class="bg-midnight rounded-[24px] border border-graphite p-8 shadow-raised relative overflow-hidden">
+                        <div class="font-mono text-[10px] text-electric-cyan uppercase tracking-[0.2em] mb-6">Resumen Ejecutivo</div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 pb-4 border-b border-graphite">
+                                <div class="font-mono text-[12px] text-steel-gray mt-1">01</div>
+                                <div class="font-geist text-[14px] text-paper-white">¿Qué contiene un documento de una patente? (Ejemplo Práctico)</div>
+                            </div>
+                            <div class="flex items-start gap-4 pb-4 border-b border-graphite">
+                                <div class="font-mono text-[12px] text-steel-gray mt-1">02</div>
+                                <div class="font-geist text-[14px] text-paper-white">Taller Práctico: Tiempo de Usar la Inteligencia Artificial</div>
+                            </div>
+                            <div class="flex items-start gap-4 pb-4 border-b border-graphite">
+                                <div class="font-mono text-[12px] text-steel-gray mt-1">03</div>
+                                <div class="font-geist text-[14px] text-paper-white">Etapas del Proceso de Solicitud de una Patente</div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="font-mono text-[12px] text-steel-gray mt-1">04</div>
+                                <div class="font-geist text-[14px] text-paper-white">¿Cómo se Explota una Patente? (Modelos de negocio)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+        <section id="part1" class="pt-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-graphite pb-6">
+                <div>
+                    <div class="font-mono text-caption text-steel-gray uppercase tracking-widest mb-4">Primera Parte</div>
+                    <h2 class="font-instrument italic text-heading text-paper-white leading-[1.1]">¿Qué contiene un documento<br>de una patente?</h2>
+                </div>
+                <div class="font-mono text-[12px] text-electric-cyan hidden md:block">Análisis Estructural</div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <!-- Columna Izquierda: Teoría y Ejemplo -->
+                <div>
+                    <div class="mb-10">
+                        <h3 class="font-mono text-[14px] text-paper-white uppercase mb-3">¿De qué documentos se compone una solicitud?</h3>
+                        <p class="font-geist text-body text-steel-gray mb-6">La estructura es fundamental para determinar el alcance de la protección. Analicemos el siguiente caso práctico.</p>
+                        
+                        <!-- Imagen de Tren/Metro Web -->
+                        <div class="w-full h-48 mb-8 rounded-[12px] overflow-hidden border border-graphite shadow-raised">
+                            <img src="https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?auto=format&fit=crop&w=800&q=80" alt="Referencia Metro/Tren" class="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500">
+                        </div>
+                    </div>
+
+                    <div class="bg-midnight border border-graphite rounded-[18px] p-8 space-y-8 relative overflow-hidden">
+                        <div class="relative z-10">
+                            <div class="font-mono text-[10px] text-steel-gray uppercase mb-2">1. El Título de la Invención</div>
+                            <div class="font-geist text-[16px] text-paper-white leading-relaxed uppercase border-l-2 border-electric-cyan pl-4">
+                                VEHÍCULO Y MÉTODO DE MEDICIÓN PARA REGULACIÓN DE CATENARIA TRANVIARIA Y MORDAZA PARA RIEL
+                            </div>
+                        </div>
+
+                        <div class="relative z-10">
+                            <div class="font-mono text-[10px] text-steel-gray uppercase mb-2">2. Resumen / Descripción del Invento</div>
+                            <div class="font-geist text-[15px] text-ghost-gray leading-relaxed bg-charcoal/50 p-4 rounded-lg">
+                                Esta invención incluye un vehículo que se mueve sobre un solo riel (como un monorriel) diseñado para ajustar los cables eléctricos que alimentan a los tranvías. También tiene una herramienta especial que se agarra al riel, y un método para medir y asegurarse de que el cable eléctrico esté a la altura correcta para que los tranvías funcionen bien.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Reivindicaciones (El núcleo interactivo) -->
+                <div>
+                    <!-- Ajuste de espaciado: cambiado h-full por h-auto y ajustados márgenes inferiores -->
+                    <div class="bg-midnight border border-graphite rounded-[18px] p-8 h-auto flex flex-col shadow-raised">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-mono text-[14px] text-paper-white uppercase">3. Las Reivindicaciones</h3>
+                            <span class="bg-graphite text-paper-white font-mono text-[10px] px-3 py-1 rounded-full uppercase">Estructura</span>
+                        </div>
+
+                        <p class="font-geist text-[15px] text-steel-gray mb-6">
+                            Las reivindicaciones definen el perímetro legal de la invención. Se construyen en tres partes fundamentales:
+                        </p>
+
+                        <!-- Imagen ilustrativa web añadida para llenar el espacio de forma visual -->
+                        <div class="w-full h-32 mb-6 rounded-lg overflow-hidden border border-graphite bg-void-black opacity-60 hover:opacity-100 transition-opacity">
+                            <img src="https://images.unsplash.com/photo-1503694978374-8a2fa686963a?auto=format&fit=crop&w=800&q=80" alt="Esquema Blueprint" class="w-full h-full object-cover filter grayscale mix-blend-luminosity">
+                        </div>
+
+                        <div class="space-y-3 mb-8 font-mono text-[12px]">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-[#4ade80]"></div>
+                                <span class="text-paper-white">1. Preámbulo: <span class="text-steel-gray">Coincide con el título (aparato, proceso, etc.)</span></span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-[#f87171]"></div>
+                                <span class="text-paper-white">2. Enlace gramatical: <span class="text-steel-gray">"caracterizado por", "que comprende"</span></span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-[#facc15]"></div>
+                                <span class="text-paper-white">3. Parte Característica: <span class="text-steel-gray">Características técnicas nuevas</span></span>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo interactivo (reducido margin-top auto para evitar espacios muertos) -->
+                        <div class="mt-4 bg-void-black border border-graphite rounded-xl p-6 font-geist text-[16px] leading-[1.8] shadow-inner">
+                            <div class="font-mono text-caption text-electric-cyan mb-4 uppercase">Ejemplo Aplicado:</div>
+                            
+                            1. <span class="claim-green">Un vehículo (100) tipo monorriel para regulación de catenaria tranviaria</span> 
+                            <span class="claim-red">que comprende</span> : 
+                            <span class="claim-yellow">- un chasis (110); - una mordaza para riel (200) conectada al chasis (110) y a un riel (1), - donde la mordaza para riel (200) incluye un mecanismo de apertura y cierre (220) con un elemento de agarre (226) que se acopla al riel (1)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Galería de Imágenes de Patente -->
+            <div class="mt-16 border border-graphite rounded-[24px] overflow-hidden relative shadow-md flex flex-col bg-paper-white">
+                <div class="font-mono text-[12px] text-paper-white uppercase tracking-widest px-8 py-4 bg-midnight border-b border-graphite">Figuras de la Invención (Documento Oficial)</div>
+                
+                <div class="w-full flex justify-center items-center bg-paper-white p-4">
+                    <img src="Imagen Patente copia.jpg" alt="Dibujo Patente 1" class="max-w-full h-auto object-contain" onerror="this.src='https://placehold.co/800x1000/ffffff/000000?text=Figura+Técnica'">
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+        <section id="part2" class="pt-12">
+            <div class="font-mono text-caption text-steel-gray uppercase tracking-widest mb-4">Segunda Parte: Taller</div>
+            <h2 class="font-instrument italic text-heading text-paper-white leading-[1.1] mb-12">Tiempo de Usar la<br>Inteligencia.... Artificial</h2>
+
+            <!-- Advertencia (Alert Box) -->
+            <div class="bg-deep-teal/20 border border-electric-cyan rounded-[12px] p-6 mb-12 flex items-start gap-4">
+                <div class="text-electric-cyan mt-1">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <div>
+                    <h4 class="font-mono text-[14px] text-electric-cyan uppercase mb-1">Nota de Advertencia de Privacidad</h4>
+                    <p class="font-geist text-[14px] text-paper-white/80">Se recomienda que para trabajos reales correr el modelo generativo localmente, y <strong>no permitir que la información entre a una nube o repositorio público</strong> para evitar destruir el requisito de novedad.</p>
+                </div>
+            </div>
+
+            <!-- Dispositivo Monologue (Product Device Card) para las Instrucciones del Prompt -->
+            <div class="bg-paper-white rounded-[40px] p-8 max-w-4xl mx-auto shadow-sm-device relative overflow-hidden mb-16">
+                <!-- Pantalla del dispositivo -->
+                <div class="screen-gradient dot-matrix-bg rounded-[24px] p-8 h-full shadow-teal-glow">
+                    <div class="font-mono text-[12px] text-paper-white/70 uppercase tracking-widest mb-6 border-b border-paper-white/20 pb-4">Terminal de Prompting para Patentes</div>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-void-black/40 backdrop-blur-sm rounded-lg p-5 border border-paper-white/10">
+                            <span class="font-mono text-electric-cyan text-[12px] uppercase block mb-2">Primer paso: Modelo</span>
+                            <p class="font-geist text-paper-white text-[15px]">Escoger el modelo de IA generativa que este de acuerdo a su plan o si tiene acceso gratuito (Ej. ChatGPT, Claude, Llama local).</p>
+                        </div>
+
+                        <div class="bg-void-black/40 backdrop-blur-sm rounded-lg p-5 border border-paper-white/10">
+                            <span class="font-mono text-electric-cyan text-[12px] uppercase block mb-3">Segundo Paso: Elementos del Prompt</span>
+                            <ul class="font-mono text-[13px] text-paper-white space-y-3">
+                                <li><span class="text-sky-signal font-bold">ROL:</span> ¿Quién es la mejor persona para redactar una patente?</li>
+                                <li><span class="text-sky-signal font-bold">CONTEXTO:</span> ¿Cuáles son las circunstancias de modo, lugar, tiempo, legislación que debería tenerse en cuenta para hacer una adecuada redacción?</li>
+                                <li><span class="text-sky-signal font-bold">INSTRUCCIÓN:</span> ¿Qué se le va a pedir al modelo?</li>
+                                <li><span class="text-sky-signal font-bold">DOCUMENTOS:</span> Cuáles documentos pueden dar un contexto. Una vez definidos agréguelos al Chat, Agente o Notebook.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opciones del Taller -->
+            <div class="font-mono text-[14px] text-steel-gray uppercase text-center mb-8">Tercer Paso: Escoger una invención para el ejercicio</div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Opción 1 -->
+                <div class="bg-midnight border border-graphite rounded-[18px] overflow-hidden group hover:border-sky-signal transition-colors">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=800&q=80" alt="Wearable Biometría Smartwatch" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                        <div class="absolute top-4 left-4 bg-void-black/80 px-3 py-1 rounded-full font-mono text-[10px] text-paper-white uppercase">Opción 1</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-instrument italic text-[32px] text-paper-white mb-2">Wearables y Biometría</h3>
+                        <p class="font-geist text-[15px] text-steel-gray">Dispositivos inteligentes (relojes, pulseras) que no solo monitorean la salud, sino que se integran con el estilo personal.</p>
+                    </div>
+                </div>
+
+                <!-- Opción 2 -->
+                <div class="bg-midnight border border-graphite rounded-[18px] overflow-hidden group hover:border-sky-signal transition-colors">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1558024920-b41e1887dc32?auto=format&fit=crop&w=800&q=80" alt="Tejidos Inteligentes" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                        <div class="absolute top-4 left-4 bg-void-black/80 px-3 py-1 rounded-full font-mono text-[10px] text-paper-white uppercase">Opción 2</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-instrument italic text-[32px] text-paper-white mb-2">Tejidos Inteligentes</h3>
+                        <p class="font-geist text-[15px] text-steel-gray">Ropa con tecnología funcional, como tejidos que no se manchan, antibacterianos (anti-COVID) o interactivos.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Herramienta de discusión en clase -->
+            <div class="mt-12 flex justify-center">
+                <button onclick="toggleElement('discussion-panel')" class="bg-charcoal border border-graphite text-paper-white font-mono text-[12px] px-8 py-4 rounded-[100000px] hover:border-electric-cyan hover:text-electric-cyan transition-colors uppercase tracking-widest flex items-center gap-3 shadow-raised">
+                    <span>Iniciar Pizarra de Discusión</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                </button>
+            </div>
+            
+            <div id="discussion-panel" class="hidden mt-6 bg-midnight border border-slate rounded-[18px] p-6 shadow-raised">
+                <div class="font-mono text-electric-cyan text-[12px] uppercase mb-4 flex justify-between items-center">
+                    <span>Notas de Clase / Prompt Engineering</span>
+                    <div class="flex gap-4">
+                        <button onclick="copyDiscussionText(event)" class="text-electric-cyan hover:text-paper-white flex items-center gap-2 transition-colors">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            Copiar
+                        </button>
+                        <button onclick="toggleElement('discussion-panel')" class="text-steel-gray hover:text-paper-white transition-colors">[X] Cerrar</button>
+                    </div>
+                </div>
+                <textarea id="prompt-textarea" class="w-full h-40 bg-void-black border border-graphite p-4 font-mono text-[14px] text-ghost-gray focus:outline-none focus:border-sky-signal rounded-lg" placeholder="Escriba aquí los elementos del prompt definidos con los estudiantes..."></textarea>
+            </div>
+        </section>
+
+        <!-- -->
+        <section id="part3" class="pt-12 border-t border-graphite mt-[120px]">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                <div>
+                    <div class="font-mono text-caption text-steel-gray uppercase tracking-widest mb-4">Tercera Parte</div>
+                    <h2 class="font-instrument italic text-heading text-paper-white leading-[1.1]">Etapas del Proceso de<br>Solicitud de una Patente</h2>
+                </div>
+            </div>
+
+            <!-- Línea de tiempo estilo Monologue -->
+            <div class="relative border-l border-graphite ml-4 md:ml-8 space-y-12 pb-8">
+                
+                <div class="relative pl-10 md:pl-16 group">
+                    <div class="absolute left-0 top-2 -translate-x-[5px] w-2.5 h-2.5 rounded-full bg-graphite group-hover:bg-electric-cyan transition-colors"></div>
+                    <div class="font-mono text-[12px] text-electric-cyan uppercase mb-1">Duración: 30 días</div>
+                    <h4 class="font-geist font-medium text-[20px] text-paper-white mb-2">1. Examen de Forma</h4>
+                    <p class="font-geist text-body text-steel-gray">Se evalúan requisitos documentales. <span class="text-ghost-gray border-b border-steel-gray/50 pb-[1px]">No se divulga por 18 meses.</span></p>
+                </div>
+
+                <div class="relative pl-10 md:pl-16 group">
+                    <div class="absolute left-0 top-2 -translate-x-[5px] w-2.5 h-2.5 rounded-full bg-graphite group-hover:bg-electric-cyan transition-colors"></div>
+                    <div class="font-mono text-[12px] text-steel-gray uppercase mb-1">Paso Público</div>
+                    <h4 class="font-geist font-medium text-[20px] text-paper-white mb-2">2. Publicación y periodo de Oposiciones</h4>
+                    <p class="font-geist text-body text-steel-gray">La solicitud se hace pública. Terceros pueden presentar argumentos en contra de la concesión.</p>
+                </div>
+
+                <div class="relative pl-10 md:pl-16 group">
+                    <div class="absolute left-0 top-2 -translate-x-[5px] w-2.5 h-2.5 rounded-full bg-graphite group-hover:bg-electric-cyan transition-colors"></div>
+                    <div class="font-mono text-[12px] text-electric-cyan uppercase mb-1">Duración: 6 meses</div>
+                    <h4 class="font-geist font-medium text-[20px] text-paper-white mb-2">3. Solicitud o petición del examen de patentabilidad</h4>
+                    <p class="font-geist text-body text-steel-gray">El solicitante debe requerir expresamente que se evalúe el fondo técnico de la invención.</p>
+                </div>
+
+                <div class="relative pl-10 md:pl-16 group">
+                    <div class="absolute left-0 top-2 -translate-x-[5px] w-2.5 h-2.5 rounded-full bg-graphite group-hover:bg-electric-cyan transition-colors"></div>
+                    <div class="font-mono text-[12px] text-steel-gray uppercase mb-1">Fase Crítica</div>
+                    <h4 class="font-geist font-medium text-[20px] text-paper-white mb-2">4. Examen de Fondo de Patentabilidad</h4>
+                    <p class="font-geist text-body text-steel-gray">Evaluación de Novedad, Nivel Inventivo y Aplicación Industrial.</p>
+                </div>
+
+                <div class="relative pl-10 md:pl-16 group">
+                    <div class="absolute left-0 top-2 -translate-x-[5px] w-[14px] h-[14px] rounded-full bg-paper-white shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
+                    <div class="font-mono text-[12px] text-paper-white uppercase mb-1">Resolución Final</div>
+                    <h4 class="font-instrument italic text-[32px] text-paper-white mb-2">5. Se otorga o niega la patente</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+        <section id="part4" class="pt-12">
+            <div class="font-mono text-caption text-steel-gray uppercase tracking-widest mb-4 text-center">Cuarta Parte</div>
+            <h2 class="font-instrument italic text-heading text-paper-white leading-[1.1] mb-16 text-center">¿Cómo se Explota una Patente?</h2>
+            
+            <p class="font-geist text-body text-ghost-gray text-center max-w-2xl mx-auto mb-16">
+                Las patentes se explotan básicamente bajo dos tipos de modelos principales que definen la estrategia comercial de la innovación.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Exclusiva -->
+                <div class="bg-midnight border border-graphite rounded-[24px] p-10 hover:border-slate transition-colors shadow-raised relative overflow-hidden group flex flex-col">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 font-instrument text-[120px] leading-none group-hover:opacity-10 transition-opacity z-0">01</div>
+                    
+                    <div class="relative z-10 w-full h-48 mb-8 rounded-xl overflow-hidden border border-graphite">
+                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" alt="Explotación Exclusiva - Apple" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                    </div>
+
+                    <h3 class="relative z-10 font-mono text-[18px] text-paper-white uppercase mb-8 pb-4 border-b border-graphite">Explotación Exclusiva</h3>
+                    
+                    <div class="relative z-10 font-geist text-[16px] text-steel-gray space-y-6 flex-grow">
+                        <p>Requiere Controlar <em>no solo</em> por medio de una patente. Implica dominar la cadena de valor.</p>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <span class="font-mono text-electric-cyan mt-1">++</span>
+                                <span class="text-paper-white">Control de Canales de Distribución</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="font-mono text-electric-cyan mt-1">++</span>
+                                <span class="text-paper-white">Producto Realmente Innovador</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Colaborativa -->
+                <div class="bg-charcoal border border-slate rounded-[24px] p-10 hover:border-sky-signal transition-colors shadow-raised relative overflow-hidden group flex flex-col">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 font-instrument text-[120px] leading-none group-hover:opacity-10 transition-opacity z-0">02</div>
+                    
+                    <div class="relative z-10 w-full h-48 mb-8 rounded-xl overflow-hidden border border-slate bg-void-black">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Explotación Colaborativa - Equipo" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                    </div>
+
+                    <h3 class="relative z-10 font-mono text-[18px] text-paper-white uppercase mb-8 pb-4 border-b border-graphite">Explotación Colaborativa</h3>
+                    
+                    <div class="relative z-10 font-geist text-[16px] text-steel-gray space-y-6 flex-grow">
+                        <p>Estrategias orientadas a la apertura, licenciamiento y estandarización tecnológica compartida.</p>
+                        
+                        <div class="flex flex-wrap gap-3 mt-8">
+                            <span class="border border-steel-gray/50 text-paper-white font-mono text-[12px] px-4 py-2 rounded-full uppercase">Licenciamiento</span>
+                            <span class="border border-steel-gray/50 text-paper-white font-mono text-[12px] px-4 py-2 rounded-full uppercase">Acuerdos</span>
+                            <span class="bg-electric-cyan/10 border border-electric-cyan text-electric-cyan font-mono text-[12px] px-4 py-2 rounded-full uppercase">FRAND</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- -->
+    <footer class="border-t border-graphite bg-obsidian pt-24 pb-12 relative z-10">
+        <div class="max-w-[1200px] mx-auto px-6">
+            
+            <div class="text-center mb-16">
+                <h3 class="font-instrument italic text-heading-sm text-paper-white mb-4">Recursos del Departamento</h3>
+                <p class="font-geist text-steel-gray text-[14px]">Escanee los códigos para acceder al material complementario.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto mb-24">
+                <!-- QR Blog -->
+                <div class="flex flex-col items-center">
+                    <div class="bg-paper-white p-4 rounded-[18px] shadow-sm-device mb-6">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://propintel.uexternado.edu.co/&margin=0&color=000000&bgcolor=ffffff" alt="QR Blog ProPintel" class="w-[140px] h-[140px] rounded-[4px]">
+                    </div>
+                    <div class="font-mono text-[14px] text-paper-white uppercase mb-2">Blog ProPintel</div>
+                    <a href="https://propintel.uexternado.edu.co/" target="_blank" class="font-geist text-[12px] text-electric-cyan hover:underline">Visitar Sitio Web</a>
+                </div>
+
+                <!-- QR Podcast -->
+                <div class="flex flex-col items-center">
+                    <div class="bg-paper-white p-4 rounded-[18px] shadow-sm-device mb-6">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://open.spotify.com/show/718A0cEw13HOa3ARm71DGA?si=6ecae424e1e04788&margin=0&color=000000&bgcolor=ffffff" alt="QR Podcast ProPintel" class="w-[140px] h-[140px] rounded-[4px]">
+                    </div>
+                    <div class="font-mono text-[14px] text-paper-white uppercase mb-2">Podcast ProPintel</div>
+                    <a href="https://open.spotify.com/show/718A0cEw13HOa3ARm71DGA?si=6ecae424e1e04788" target="_blank" class="font-geist text-[12px] text-electric-cyan hover:underline">Escuchar en Spotify</a>
+                </div>
+            </div>
+
+            <!-- Creditos finales -->
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-graphite gap-4 text-center md:text-left">
+                <div>
+                    <div class="font-mono text-[10px] text-steel-gray tracking-widest uppercase mb-1">Presentación elaborada por:</div>
+                    <div class="font-geist text-[14px] text-paper-white font-medium">Carlos A Conde G <span class="text-ghost-gray font-normal">(PhD, MA) Docente Investigador</span></div>
+                </div>
+                <div class="font-mono text-[10px] text-steel-gray tracking-widest uppercase">
+                    Maestría en Propiedad Intelectual • Año 1 Septiembre 2026
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- -->
+    <script>
+        // Función simple para alternar la visibilidad de elementos (ej. Pizarra de discusión)
+        function toggleElement(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                // Auto-scroll hacia el panel al abrirlo
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                el.classList.add('hidden');
+            }
+        }
+
+        // Función para copiar texto de la pizarra
+        function copyDiscussionText(event) {
+            const textarea = document.getElementById('prompt-textarea');
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Notificación visual en el botón
+            const btn = event.currentTarget;
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> ¡Copiado!`;
+            btn.classList.add('text-paper-white');
+            
+            // Deseleccionamos el texto para no estorbar
+            window.getSelection().removeAllRanges();
+            
+            // Revertimos el botón después de 2 segundos
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('text-paper-white');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

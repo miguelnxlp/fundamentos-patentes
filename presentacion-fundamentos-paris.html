@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos de las Patentes | Maestría Propiedad Intelectual</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ledger-navy': '#09234f',
+                        'registry-blue': '#384ce3',
+                        'network-teal': '#1888a2',
+                        'paper-white': '#ffffff',
+                        'ink-black': '#000000',
+                        'carbon': '#121012',
+                        'mint-paper': '#eff5f0',
+                        'sky-paper': '#c4f0ff',
+                        'rule-gray': '#e5e5e5',
+                        'steel-rule': '#ced3dc',
+                        'quiet-gray': '#595959',
+                    },
+                    fontFamily: {
+                        'season': ['"Cormorant Garamond"', 'ui-serif', 'Georgia', 'serif'],
+                        'uncut': ['"DM Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        'mono': ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+                    },
+                    fontSize: {
+                        'hero': ['72px', { lineHeight: '1.02', letterSpacing: '-0.36px' }],
+                        'section': ['48px', { lineHeight: '1.1', letterSpacing: '-0.24px' }],
+                        'panel': ['24px', { lineHeight: '1.35', letterSpacing: '-0.24px' }],
+                        'body-lg': ['20px', { lineHeight: '1.4', letterSpacing: '-0.18px' }],
+                        'body': ['16px', { lineHeight: '1.5', letterSpacing: '0px' }],
+                        'nav': ['15px', { lineHeight: '0.8', letterSpacing: '0px' }],
+                        'mono-action': ['16px', { lineHeight: '1.15', letterSpacing: '0px' }],
+                        'eyebrow': ['12px', { lineHeight: '1.15', letterSpacing: '0px' }],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos personalizados adicionales basados en Baselayer */
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Gradiente para Hero y Nav oscuro */
+        .bg-ledger-gradient {
+            background: linear-gradient(90deg, #09234f 0%, #384ce3 100%);
+        }
+
+        /* Utilidad para bordes de 1px precisos */
+        .border-1 {
+            border-width: 1px;
+        }
+
+        /* Estilo para las secciones tipo presentación */
+        .slide-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 100px; /* Espacio para el header fijo */
+            padding-bottom: 60px;
+        }
+
+        /* Botón estilo Baselayer oscuro */
+        .btn-dark-outline {
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: 500;
+            background: transparent;
+            transition: all 0.2s;
+        }
+        .btn-dark-outline:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Botón estilo Baselayer de conversión */
+        .btn-conversion {
+            background-color: #09234f;
+            color: #ffffff;
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            text-transform: uppercase;
+            padding: 20px 32px;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-conversion:hover {
+            background-color: #384ce3;
+        }
+
+        /* Grid decorativo para consolas */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(196, 240, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(196, 240, 255, 0.1) 1px, transparent 1px);
+        }
+
+        /* Transiciones de navegación */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: currentColor;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .reflection-box {
+            border-left: 4px solid #384ce3;
+            background-color: #eff5f0;
+            padding: 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body class="antialiased font-uncut text-ink-black bg-paper-white">
+
+    <header id="main-header" class="fixed top-0 w-full z-50 transition-colors duration-300 bg-ledger-gradient text-paper-white h-[80px] flex items-center border-b border-paper-white/20">
+        <div class="max-w-[1312px] mx-auto w-full px-6 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="Logo Dpto.jpg" alt="Logo Dpto. Propiedad Intelectual" class="h-10 w-auto object-contain rounded-sm shadow-sm" onerror="this.src='https://placehold.co/150x50/ffffff/000000?text=U+Externado'">
+                <div class="hidden xl:block font-mono font-medium text-[11px] tracking-widest uppercase leading-tight">
+                    Maestría en Propiedad Intelectual<br><span class="text-sky-paper transition-colors duration-300" id="header-subtitle">Año 1 • Septiembre 2026</span>
+                </div>
+            </div>
+            
+            <nav class="hidden lg:flex gap-8 font-uncut text-nav font-medium">
+                <a href="#inicio" class="nav-link nav-item" data-target="inicio">Inicio</a>
+                <a href="#convenio-paris" class="nav-link nav-item" data-target="convenio-paris">Convenio de París</a>
+                <a href="#dabus" class="nav-link nav-item" data-target="dabus">Caso DABUS</a>
+                <a href="#independencia" class="nav-link nav-item" data-target="independencia">Independencia & EPO</a>
+                <a href="#patrimonio" class="nav-link nav-item" data-target="patrimonio">Patrimonio & ADPIC</a>
+                <a href="#recursos" class="nav-link nav-item" data-target="recursos">Recursos</a>
+            </nav>
+
+            <div>
+                <button onclick="window.print()" class="btn-dark-outline text-eyebrow py-2 px-4">
+                    Generar PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative w-full">
+
+        <section id="inicio" class="slide-section bg-ledger-gradient text-paper-white pt-[120px] pb-0 relative overflow-hidden">
+            <div class="max-w-[1312px] mx-auto px-6 w-full text-center relative z-10 flex flex-col items-center">
+                
+                <div class="font-mono text-eyebrow text-sky-paper uppercase mb-6 tracking-widest border border-sky-paper/30 inline-block px-4 py-2 rounded-sm bg-ledger-navy/50">
+                    Maestría en Propiedad Intelectual • Año 1 • Septiembre 2026
+                </div>
+
+                <h1 class="font-season text-hero font-medium mb-8 max-w-4xl mx-auto">
+                    Nuevas Creaciones:<br>Fundamentos de las Patentes
+                </h1>
+                
+                <p class="font-uncut text-body-lg max-w-2xl mx-auto mb-6 text-sky-paper">
+                    La Propiedad Industrial ha sido una construcción internacional que ha llevado a la harmonización.
+                </p>
+
+                <div class="font-uncut text-body text-paper-white mb-10 bg-carbon/50 border border-registry-blue/50 px-6 py-3 rounded-[4px] inline-flex items-center gap-2">
+                    <span class="text-registry-blue font-bold">Autor:</span> Carlos A Conde G (PhD, MA) Docente Investigador
+                </div>
+
+                <button onclick="document.getElementById('convenio-paris').scrollIntoView({behavior: 'smooth'})" class="btn-conversion mb-16">
+                    Iniciar Clase
+                </button>
+
+                <!-- Consola visual decorativa al estilo Baselayer -->
+                <div class="w-full max-w-5xl mx-auto bg-registry-blue border border-sky-paper rounded-t-[4px] p-5 shadow-2xl relative mt-auto transform translate-y-8">
+                    <div class="absolute top-2 left-2 flex gap-2">
+                        <div class="w-2 h-2 rounded-full bg-paper-white/50"></div>
+                        <div class="w-2 h-2 rounded-full bg-paper-white/50"></div>
+                        <div class="w-2 h-2 rounded-full bg-paper-white/50"></div>
+                    </div>
+                    <div class="font-mono text-eyebrow text-sky-paper uppercase mb-4 text-left border-b border-sky-paper/30 pb-2 mt-4">
+                        Resumen Ejecutivo del Módulo (8 Horas)
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-left bg-ledger-navy p-6 rounded-[4px] border border-sky-paper/20">
+                        <div class="p-4 border-l-2 border-registry-blue">
+                            <h3 class="font-mono text-paper-white mb-2 uppercase text-sm">Módulo 1</h3>
+                            <p class="font-uncut text-sky-paper text-sm">Convenio de París y sus Principios Fundamentales</p>
+                        </div>
+                        <div class="p-4 border-l-2 border-registry-blue">
+                            <h3 class="font-mono text-paper-white mb-2 uppercase text-sm">Módulo 2</h3>
+                            <p class="font-uncut text-sky-paper text-sm">El Inventor: Análisis del caso IA DABUS</p>
+                        </div>
+                        <div class="p-4 border-l-2 border-registry-blue">
+                            <h3 class="font-mono text-paper-white mb-2 uppercase text-sm">Módulo 3</h3>
+                            <p class="font-uncut text-sky-paper text-sm">Independencia: Patente Europea vs Unitaria</p>
+                        </div>
+                        <div class="p-4 border-l-2 border-registry-blue">
+                            <h3 class="font-mono text-paper-white mb-2 uppercase text-sm">Módulo 4</h3>
+                            <p class="font-uncut text-sky-paper text-sm">ADPIC, Decisión 486 y Patrimonio Biológico</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grid backdrop -->
+            <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
+        </section>
+
+        <section id="convenio-paris" class="slide-section bg-paper-white text-ink-black py-20 border-b border-rule-gray">
+            <div class="max-w-[1312px] mx-auto px-6 w-full">
+                <div class="flex flex-col md:flex-row gap-12 items-start">
+                    
+                    <div class="w-full md:w-1/2">
+                        <div class="font-mono text-eyebrow text-quiet-gray uppercase mb-4 tracking-widest">
+                            MARCO INTERNACIONAL
+                        </div>
+                        <h2 class="font-season text-section font-medium mb-8">
+                            Convenio de París para la Protección de la Propiedad Industrial (OMPI)
+                        </h2>
+                        
+                        <div class="font-uncut text-body space-y-6">
+                            <div>
+                                <h3 class="font-uncut text-panel font-medium mb-2">¿Qué es el Convenio de París?</h3>
+                                <p class="bg-mint-paper p-6 border border-rule-gray rounded-none text-quiet-gray italic">
+                                    El Convenio , “adoptado en 1883, se aplica a la propiedad industrial en su acepción más amplia, con inclusión de las patentes, las marcas, los dibujos y modelos industriales, los modelos de utilidad, las marcas de servicio, los nombres comerciales, las indicaciones geográficas y a la represión de la competencia desleal. Este acuerdo internacional fue el primer paso importante para ayudar a los creadores a proteger sus obras intelectuales en otros países.”
+                                    <br><span class="text-xs font-mono mt-4 block">Fuente: https://www.wipo.int/es/web/treaties/ip/paris/index</span>
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h3 class="font-uncut text-panel font-medium mb-4 mt-8">Principios del Convenio de París</h3>
+                                
+                                <div class="grid grid-cols-1 gap-4">
+                                    <div class="border border-steel-rule p-5 bg-paper-white relative overflow-hidden group hover:bg-sky-paper/10 transition-colors">
+                                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-registry-blue"></div>
+                                        <h4 class="font-mono font-medium mb-2 uppercase">Artículo 2. Trato Nacional a los Nacionales de los Países de la Unión</h4>
+                                        <ul class="list-disc pl-5 space-y-1 text-quiet-gray">
+                                            <li>No discriminación con no nacionales</li>
+                                            <li>No necesidad de Domicilio</li>
+                                            <li>Nacionales de Países No Miembros de la Unión Domiciliados</li>
+                                            <li>No Aplica a normas de representación y de procedimiento</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="border border-steel-rule p-5 bg-paper-white relative overflow-hidden group hover:bg-sky-paper/10 transition-colors">
+                                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-network-teal"></div>
+                                        <h4 class="font-mono font-medium mb-2 uppercase">Mención del Inventor en la Patente</h4>
+                                        <p class="text-quiet-gray italic">“Artículo 4 ter El inventor tiene el derecho de ser mencionado como tal en la patente.”</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2 flex justify-center items-center p-8 bg-mint-paper border border-rule-gray h-full min-h-[400px]">
+                        <div class="relative w-full h-[400px]">
+                            <img src="OMPI.jpg" alt="Sede de la OMPI" class="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-500 border border-steel-rule" onerror="this.src='https://placehold.co/800x600/eff5f0/000000?text=OMPI'">
+                            <div class="absolute bottom-0 right-0 bg-ink-black text-paper-white font-mono text-eyebrow px-3 py-1">SEDE OMPI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dabus" class="slide-section bg-carbon text-paper-white py-24 border-b border-ink-black relative">
+            <div class="max-w-[1312px] mx-auto px-6 w-full relative z-10">
+                <div class="font-mono text-eyebrow text-sky-paper uppercase mb-4 tracking-widest text-center">
+                    ANÁLISIS DE CASO / DISCUSIÓN
+                </div>
+                <h2 class="font-season text-section font-medium mb-12 text-center">
+                    Device for the Autonomous Bootstrapping of Unified Sentience (DABUS)<br>
+                    <span class="text-registry-blue">(Dr Thaler)</span>
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Contexto Tecnológico -->
+                    <div class="border border-quiet-gray p-6 bg-ink-black">
+                        <div class="font-mono text-network-teal mb-4 uppercase text-sm border-b border-quiet-gray pb-2">1. Redes Neuronales</div>
+                        <p class="font-uncut text-body text-rule-gray mb-4">
+                            Modelos matemáticos diseñados para imitar las redes neuronales naturales.
+                        </p>
+                        <p class="font-uncut text-body text-rule-gray mb-4">
+                            En los humanos, esto está constituido por miles de millones de neuronas unidas por una red compleja, con inteligencia producida como resultado de las interconexiones entre neuronas.
+                        </p>
+                        <p class="font-uncut text-body text-paper-white font-medium">
+                            DABUS emplea una red neuronales de diferentes capas (layers) que interactuan para generar el proceso inventivo.
+                        </p>
+                    </div>
+
+                    <!-- El Precedente -->
+                    <div class="border border-registry-blue p-6 bg-[#0a1128] lg:col-span-2 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-2 text-registry-blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        </div>
+                        <div class="font-mono text-registry-blue mb-4 uppercase text-sm border-b border-registry-blue/30 pb-2">2. Jurisprudencia Internacional</div>
+                        
+                        <p class="font-uncut text-body text-sky-paper mb-4 font-medium">
+                            Sudáfrica y Australia han reconocido a la IA como inventores:
+                        </p>
+                        
+                        <blockquote class="font-season text-[22px] leading-snug italic text-paper-white border-l-2 border-registry-blue pl-4 my-6">
+                            "Un inventor reconocido por la ley puede ser un sistema o dispositivo de inteligencia artificial. Pero tal inventor no-humano no puede ser ni un solicitante de una patente ni un concesionario de una patente. Sostener lo anterior esta de acuerdo con la realidad de la tecnología actual. Es consistente con la ley. Y es coherente con la promoción de la innovación."
+                        </blockquote>
+                        <div class="font-mono text-eyebrow text-quiet-gray text-right">
+                            Thaler v Commissioner of Patents [2021] FCA 879 (30 July 2021)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloque de Reflexión -->
+                <div class="mt-12 bg-registry-blue border-l-4 border-sky-paper p-8 flex flex-col md:flex-row items-center justify-between shadow-2xl rounded-sm">
+                    <div class="flex items-center gap-6 mb-6 md:mb-0">
+                        <div class="text-4xl text-sky-paper">💬</div>
+                        <div>
+                            <h3 class="font-mono text-sky-paper mb-1 uppercase tracking-wider text-sm">Punto de Discusión</h3>
+                            <p class="font-season text-3xl text-paper-white font-medium">¿Puede existir el inventor no humano?</p>
+                        </div>
+                    </div>
+                    <button class="btn-dark-outline hover:bg-ledger-navy hover:border-ledger-navy" onclick="toggleDiscussion()">
+                        Abrir Pizarra de Notas
+                    </button>
+                </div>
+
+                <!-- Pizarra oculta para notas en clase -->
+                <div id="discussion-board" class="hidden mt-6 bg-paper-white p-6 rounded-sm">
+                    <textarea class="w-full h-32 bg-mint-paper border border-steel-rule p-4 font-uncut text-ink-black focus:outline-none focus:border-registry-blue" placeholder="Notas de la discusión en clase..."></textarea>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-registry-blue to-transparent"></div>
+        </section>
+
+        <section id="independencia" class="slide-section bg-mint-paper text-ink-black py-24 border-b border-rule-gray">
+            <div class="max-w-[1312px] mx-auto px-6 w-full">
+                
+                <div class="mb-16">
+                    <div class="font-mono text-eyebrow text-quiet-gray uppercase mb-4 tracking-widest">
+                        PRINCIPIOS FUNDAMENTALES
+                    </div>
+                    <h2 class="font-season text-section font-medium mb-4">
+                        d. Principio de Independencia
+                    </h2>
+                    <p class="font-uncut text-panel text-ink-black max-w-3xl">
+                        Las patentes sobre la misma invención, solicitadas en diferentes países son independientes en cuanto a:
+                        <span class="bg-sky-paper px-2 font-mono text-sm ml-2">Nulidad</span>
+                        <span class="bg-sky-paper px-2 font-mono text-sm mx-1">Caducidad</span>
+                        <span class="bg-sky-paper px-2 font-mono text-sm">Duración</span>
+                    </p>
+                </div>
+
+                <!-- Cuadro Comparativo Estilo Baselayer -->
+                <div class="bg-paper-white border border-steel-rule shadow-sm">
+                    <div class="border-b border-steel-rule bg-ledger-navy text-paper-white p-6">
+                        <h3 class="font-mono text-lg uppercase tracking-wider">El Caso de la Patente Europea vs la Patente Unitaria</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        <!-- Columna EPO -->
+                        <div class="p-8 border-b md:border-b-0 md:border-r border-steel-rule">
+                            <div class="flex items-center gap-4 mb-6 h-[80px]">
+                                <img src="EPO.jpeg" alt="Oficina Europea de Patentes" class="w-20 h-20 object-cover rounded-sm border border-rule-gray" onerror="this.src='https://placehold.co/100x100/121012/ffffff?text=EPO'">
+                                <h4 class="font-season text-2xl font-medium">Convenio Europeo de Patentes (EPO)<br><span class="text-quiet-gray font-uncut text-lg">Patente Europea</span></h4>
+                            </div>
+                            
+                            <ul class="font-uncut text-body space-y-4 mb-8">
+                                <li class="flex gap-3"><span class="text-registry-blue font-bold">✓</span> Creada en 1973</li>
+                                <li class="flex gap-3"><span class="text-registry-blue font-bold">✓</span> Requisitos de Procedimiento y Sustanciales unificados</li>
+                            </ul>
+                            
+                            <div class="bg-carbon text-paper-white p-5 rounded-sm">
+                                <div class="font-mono text-eyebrow text-sky-paper uppercase mb-3">Problemas Identificados</div>
+                                <ul class="font-uncut text-sm space-y-2">
+                                    <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✗</span> Altos Costos de Traducción Una vez otorgada la Patente País por País</li>
+                                    <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✗</span> Nulidad Patentes debe litigarse País por País</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Columna UE -->
+                        <div class="p-8 bg-[#f8fafc]">
+                            <div class="flex items-center gap-4 mb-6 h-[80px]">
+                                <img src="european-commission-european-union-belgium.jpg" alt="Unión Europea" class="w-20 h-20 object-cover rounded-sm border border-rule-gray" onerror="this.src='https://placehold.co/100x100/1888a2/ffffff?text=UE'">
+                                <h4 class="font-season text-2xl font-medium">Patente Unitaria (UE)<br><span class="text-quiet-gray font-uncut text-lg">Nuevo Sistema</span></h4>
+                            </div>
+                            
+                            <ul class="font-uncut text-body space-y-3">
+                                <li class="flex gap-3"><span class="text-network-teal font-bold">+</span> Paquete de Patentes de la UE</li>
+                                <li class="flex gap-3"><span class="text-network-teal font-bold">+</span> Idiomas (Ingles, Francés y Aleman)</li>
+                                <li class="flex gap-3"><span class="text-network-teal font-bold">+</span> Patente Unitaria: <i>Request for Unitary Effect</i></li>
+                                <li class="flex gap-3"><span class="text-network-teal font-bold">+</span> La Corte de la Patente Unitaria</li>
+                                <li class="flex gap-3"><span class="text-network-teal font-bold">+</span> SPC</li>
+                                <li class="flex gap-3"><span class="text-network-teal font-bold">+</span> División Central (París), Subsidiarias para Invenciones Especificas (Londres y Alemania)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="patrimonio" class="slide-section bg-paper-white text-ink-black py-24">
+            <div class="max-w-[1312px] mx-auto px-6 w-full">
+                
+                <!-- Decisión 486 -->
+                <div class="mb-20">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-8">
+                            <div class="font-mono text-eyebrow text-quiet-gray uppercase mb-4 tracking-widest">
+                                NORMATIVA ANDINA
+                            </div>
+                            <h2 class="font-season text-[40px] leading-tight font-medium mb-6">
+                                Principio de Protección del Patrimonio Biológico y Genético y de los Conocimientos Tradicionales
+                            </h2>
+                            <div class="bg-mint-paper border-l-4 border-network-teal p-6 mb-6">
+                                <h4 class="font-mono text-sm uppercase mb-2 font-medium">Artículo 3 de la Decisión 486</h4>
+                                <p class="font-uncut text-body">Salvaguardar y respetar el patrimonio biológico y genético, y conocimientos tradicionales.</p>
+                            </div>
+                            <ul class="font-uncut text-body space-y-2 list-none">
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-ink-black rounded-full"></div> <b>Transnacional:</b> Se adquiera de conformidad con el ordenamiento jurídico internacional, comunitario y nacional.</li>
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-ink-black rounded-full"></div> Sigue otros acuerdos (D 391, CDB, OIT)</li>
+                            </ul>
+                        </div>
+                        <div class="lg:col-span-4 flex justify-center">
+                            <div class="p-2 border border-steel-rule bg-white shadow-md">
+                                <img src="CAN.webp" alt="Sede Comunidad Andina" class="w-full h-auto object-cover max-h-[250px]" onerror="this.src='https://placehold.co/400x300/1888a2/ffffff?text=CAN'">
+                                <div class="text-center font-mono text-[10px] text-quiet-gray mt-2 uppercase">Sede CAN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Línea divisoria -->
+                <div class="w-full h-px bg-rule-gray my-12"></div>
+
+                <!-- ADPIC / OMC -->
+                <div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        
+                        <div>
+                            <div class="flex items-center gap-4 mb-6">
+                                <img src="OMC.jpg" alt="Sede OMC" class="w-16 h-16 object-cover rounded-sm border border-rule-gray" onerror="this.src='https://placehold.co/100x100/121012/ffffff?text=OMC'">
+                                <div>
+                                    <h2 class="font-season text-3xl font-medium">ADPIC</h2>
+                                    <p class="font-uncut text-sm text-quiet-gray">Acuerdo sobre los Aspectos de los Derechos de Propiedad Intelectual relacionados con el Comercio - OMC</p>
+                                </div>
+                            </div>
+
+                            <div class="border border-steel-rule p-6 bg-paper-white mb-8">
+                                <h3 class="font-mono text-network-teal mb-3 uppercase text-sm">Objetivo del Acuerdo - Artículo 7</h3>
+                                <p class="font-uncut text-body italic text-quiet-gray">
+                                    "La protección y la observancia de los derechos de propiedad intelectual deberán contribuir a la promoción de la innovación tecnológica y a la transferencia y difusión de la tecnología, en beneficio recíproco de los productores y de los usuarios de conocimientos tecnológicos y de modo que favorezcan el bienestar social y económico y el equilibrio de derechos y obligaciones."
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-carbon text-paper-white p-8">
+                            <h3 class="font-mono text-sky-paper mb-4 uppercase text-sm border-b border-sky-paper/30 pb-2">
+                                ¿Cómo se relaciona con la Decisión 486?
+                            </h3>
+                            <p class="font-uncut text-body mb-6">
+                                En principio no existe si quiera una mención dentro del texto de los ADPIC, pero el <span class="text-network-teal font-medium">Grupo Africano junto con la CAN</span> impulsaron la inclusión en la Declaración Ministerial de Doha en el año 2007.
+                            </p>
+                            
+                            <div class="bg-ledger-navy border border-registry-blue p-5 text-sm font-uncut text-rule-gray mb-6 h-48 overflow-y-auto">
+                                <p><strong>19.</strong> Encomendamos al Consejo de los ADPIC que, al llevar adelante su programa de trabajo, incluso en el marco del examen previsto en el párrafo 3 b) del artículo 27, del examen de la aplicación del Acuerdo sobre los ADPIC previsto en el párrafo 1 del artículo 71 y de la labor prevista en cumplimiento del párrafo 12 de la presente Declaración, examine, entre otras cosas, la relación entre el Acuerdo sobre los ADPIC y el Convenio sobre la Diversidad Biológica, la protección de los conocimientos tradicionales y el folclore, y otros nuevos acontecimientos pertinentes señalados por los Miembros de conformidad con el párrafo 1 del artículo 71. Al realizar esta labor, el Consejo de los ADPIC se regirá por los objetivos y principios enunciados en los artículos 7 y 8 del Acuerdo sobre los ADPIC y tendrá plenamente en cuenta la dimensión de desarrollo.</p>
+                            </div>
+
+                            <div class="flex items-center gap-4 bg-paper-white text-ink-black p-4 cursor-pointer hover:bg-mint-paper transition-colors" onclick="toggleAnswer()">
+                                <span class="text-2xl">🤷🏻‍♂️</span>
+                                <h4 class="font-season text-2xl font-medium m-0">¿Qué Creen que Paso?</h4>
+                                <span class="ml-auto font-mono text-xs uppercase text-registry-blue" id="btn-revelar">Revelar respuesta</span>
+                            </div>
+                            
+                            <div id="respuesta-adpic" class="hidden mt-4 p-4 border border-rule-gray bg-mint-paper text-ink-black font-uncut text-sm">
+                                <i>Espacio para discusión con los estudiantes antes de revelar que, a pesar de los esfuerzos, las negociaciones en la OMC se estancaron y no se logró una modificación sustancial de los ADPIC para incluir obligatoriamente el origen del material genético, dejando esto principalmente a legislaciones regionales como la CAN o nacionales.</i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recursos" class="slide-section bg-ledger-gradient text-paper-white py-24 border-b border-ink-black relative overflow-hidden">
+            <div class="max-w-[1312px] mx-auto px-6 w-full relative z-10">
+                <div class="font-mono text-eyebrow text-sky-paper uppercase mb-4 tracking-widest text-center">
+                    ENLACES DE INTERÉS
+                </div>
+                <h2 class="font-season text-section font-medium mb-12 text-center">
+                    Recursos del Departamento de<br>Propiedad Intelectual
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Blog ProPintel -->
+                    <div class="bg-carbon border border-registry-blue p-8 flex flex-col items-center text-center hover:bg-[#0a1128] transition-colors relative group">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-registry-blue"></div>
+                        <h3 class="font-mono text-paper-white mb-2 uppercase text-lg">Blog ProPintel</h3>
+                        <p class="font-uncut text-sky-paper text-sm mb-6 h-10">Lee nuestros últimos artículos, análisis jurisprudenciales y noticias.</p>
+                        
+                        <div class="bg-paper-white p-3 rounded-sm mb-8 shadow-lg group-hover:scale-105 transition-transform">
+                            <!-- Generador de QR dinámico -->
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://propintel.uexternado.edu.co/&margin=0" alt="QR Blog ProPintel" class="w-[150px] h-[150px]">
+                        </div>
+                        
+                        <a href="https://propintel.uexternado.edu.co/" target="_blank" class="btn-dark-outline w-full text-center">
+                            Visitar Blog
+                        </a>
+                    </div>
+
+                    <!-- Podcast ProPintel -->
+                    <div class="bg-carbon border border-network-teal p-8 flex flex-col items-center text-center hover:bg-[#0a1128] transition-colors relative group">
+                        <div class="absolute top-0 right-0 w-1 h-full bg-network-teal"></div>
+                        <h3 class="font-mono text-paper-white mb-2 uppercase text-lg">Podcast ProPintel</h3>
+                        <p class="font-uncut text-sky-paper text-sm mb-6 h-10">Escúchanos en Spotify. Debates y entrevistas exclusivas.</p>
+                        
+                        <div class="bg-paper-white p-3 rounded-sm mb-8 shadow-lg group-hover:scale-105 transition-transform">
+                            <!-- Generador de QR dinámico -->
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://open.spotify.com/show/718A0cEw13HOa3ARm71DGA?si=6ecae424e1e04788&margin=0" alt="QR Podcast ProPintel" class="w-[150px] h-[150px]">
+                        </div>
+                        
+                        <a href="https://open.spotify.com/show/718A0cEw13HOa3ARm71DGA?si=6ecae424e1e04788" target="_blank" class="btn-dark-outline !border-network-teal hover:!bg-network-teal w-full text-center">
+                            Escuchar Podcast
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Grid backdrop -->
+            <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
+        </section>
+
+        <footer class="bg-ledger-navy text-paper-white py-12 border-t border-registry-blue">
+            <div class="max-w-[1312px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+                <div>
+                    <div class="font-mono text-sm uppercase tracking-widest mb-2">
+                        Maestría en Propiedad Intelectual - Universidad Externado
+                    </div>
+                    <div class="font-uncut text-sm text-sky-paper">
+                        Módulo: Nuevas Creaciones (Patentes) • Año 1 • Septiembre 2026
+                    </div>
+                </div>
+                
+                <div class="border-l-2 border-registry-blue pl-4 text-left">
+                    <span class="font-mono text-[10px] uppercase text-sky-paper tracking-widest block mb-1">Autor & Docente Investigador</span>
+                    <span class="font-season text-xl font-medium text-paper-white block">Carlos A Conde G <span class="font-uncut text-sm text-rule-gray font-normal">(PhD, MA)</span></span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // Función para mostrar/ocultar pizarra de discusión
+        function toggleDiscussion() {
+            const board = document.getElementById('discussion-board');
+            if (board.classList.contains('hidden')) {
+                board.classList.remove('hidden');
+            } else {
+                board.classList.add('hidden');
+            }
+        }
+
+        // Función para mostrar la respuesta en la sección ADPIC
+        function toggleAnswer() {
+            const answer = document.getElementById('respuesta-adpic');
+            const btn = document.getElementById('btn-revelar');
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                btn.innerText = "Ocultar respuesta";
+            } else {
+                answer.classList.add('hidden');
+                btn.innerText = "Revelar respuesta";
+            }
+        }
+
+        // Cambio de estilo del header al hacer scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            const heroSection = document.getElementById('inicio');
+            const heroBottom = heroSection.offsetTop + heroSection.offsetHeight - 80; // 80 es la altura del header
+
+            if (window.scrollY > heroBottom) {
+                // Header claro (Light Sticky Header según Baselayer)
+                header.classList.remove('bg-ledger-gradient', 'text-paper-white', 'border-paper-white/20');
+                header.classList.add('bg-paper-white', 'text-ink-black', 'border-rule-gray');
+                
+                // Actualizar botones y textos en el header si es necesario
+                const btn = header.querySelector('button');
+                if(btn) {
+                    btn.classList.remove('btn-dark-outline');
+                    btn.classList.add('border', 'border-steel-rule', 'text-ink-black', 'rounded-[4px]', 'font-mono', 'uppercase', 'py-2', 'px-4');
+                }
+                const subtitle = document.getElementById('header-subtitle');
+                if(subtitle) {
+                    subtitle.classList.remove('text-sky-paper');
+                    subtitle.classList.add('text-registry-blue');
+                }
+            } else {
+                // Header oscuro original
+                header.classList.add('bg-ledger-gradient', 'text-paper-white', 'border-paper-white/20');
+                header.classList.remove('bg-paper-white', 'text-ink-black', 'border-rule-gray');
+                
+                const btn = header.querySelector('button');
+                if(btn) {
+                    btn.className = 'btn-dark-outline text-eyebrow py-2 px-4';
+                }
+                const subtitle = document.getElementById('header-subtitle');
+                if(subtitle) {
+                    subtitle.classList.remove('text-registry-blue');
+                    subtitle.classList.add('text-sky-paper');
+                }
+            }
+            
+            // Resaltar menú activo basado en scroll
+            const sections = document.querySelectorAll('.slide-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active', 'text-sky-paper', 'text-registry-blue', 'font-bold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active', 'font-bold');
+                    // Color activo depende del estado del header
+                    if (header.classList.contains('bg-paper-white')) {
+                        link.classList.add('text-registry-blue');
+                    } else {
+                        link.classList.add('text-sky-paper');
+                    }
+                }
+            });
+        });
+        
+        // Disparar evento scroll inicial para setear estados
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
